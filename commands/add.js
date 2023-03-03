@@ -36,24 +36,26 @@ module.exports = {
                 id_player: jogador.id,
                 nome: jogador.nome,
                 hp: jogador.hp,
+                hp_base: jogador.hp,
                 ca: jogador.ca,
                 iniciativa: interaction.options.getInteger('iniciativa')
             }
         });
+        console.log(created);
         if(!created){
-            await user.update({
+            await user.set({
                 id_batalha: batalha.id_batalha,
                 nome_batalha: batalha.nome_batalha,
                 nome_mestre: batalha.nome_mestre,
                 nome: jogador.nome,
                 hp: jogador.hp,
+                hp_base: jogador.hp,
                 ca: jogador.ca,
                 iniciativa: interaction.options.getInteger('iniciativa')
             });
+            console.log(user);
+            await user.save();
         }
-        
-        const teste = await Batalha.findAll({group: 'id_batalha'});
-        console.log(teste);
         await interaction.reply(`Adicionando ${interaction.options.getUser('jogador').username} a batalha!`);
 
 	},

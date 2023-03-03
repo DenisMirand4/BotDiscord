@@ -14,6 +14,7 @@ module.exports = (sequelize,DataTipes) => {
     },
 	nome: DataTipes.STRING,
 	hp: DataTipes.INTEGER,
+    hp_base: DataTipes.INTEGER,
     ca: DataTipes.INTEGER,
     iniciativa: DataTipes.INTEGER,
     },

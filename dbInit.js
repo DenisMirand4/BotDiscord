@@ -7,6 +7,13 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	storage: 'database.sqlite',
 });
 
+try{
+	sequelize.authenticate();
+	console.log('Connection has been established successfully.');
+} catch (error) {
+	console.error('Unable to connect to the database:', error);
+}
+
 const Jogadores = require('./models/tb_jogadores')(sequelize, Sequelize.DataTypes);
 const Batalha = require('./models/tb_batalha')(sequelize, Sequelize.DataTypes);
 

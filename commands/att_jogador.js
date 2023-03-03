@@ -7,13 +7,16 @@ module.exports = {
 		.setDescription('Atualiza um jogador')
         .addUserOption(option => option
             .setName('jogador')
-            .setDescription('Jogador a ser adicionado'))
+            .setDescription('Jogador a ser adicionado')
+            .setRequired(true))       
         .addIntegerOption(option => option
             .setName('hp')
-            .setDescription('Insira o HP do jogador'))
+            .setDescription('Insira o HP do jogador')
+            .setRequired(true))
         .addIntegerOption(option => option
             .setName('ca')
-            .setDescription('Insira o CA do jogador')),
+            .setDescription('Insira o CA do jogador')
+            .setRequired(true)),
         
 
 	async execute(interaction) {
@@ -23,12 +26,8 @@ module.exports = {
             await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} criado!`);
             return;
         }
-        jogador.set({
-            nome: interaction.options.getUser('jogador').username,
-            hp: interaction.options.getInteger('hp'),
-            ca: interaction.options.getInteger('ca')
-        });
-        await jogador.save();
-		await interaction.reply(`Adicionando ${interaction.options.getUser('jogador').username} a batalha!`);
+        await Jogadores.destroy({where: {id: interaction.options.getUser('jogador').id}});
+        await Jogadores.create({id: interaction.options.getUser('jogador').id, nome: interaction.options.getUser('jogador').username, hp: interaction.options.getInteger('hp'), ca: interaction.options.getInteger('ca')});
+		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} atualizado!`);
 	},
 };

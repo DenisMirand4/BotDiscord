@@ -12,13 +12,18 @@ module.exports = {
 	async execute(interaction) {
         const batalha = await Batalha.findOne({where: {nome_batalha: interaction.options.getString('nomedabatalhafim').toLowerCase().trim()}});
         if (!batalha) {
-            await interaction.reply(`Batalha: ${interaction.options.getInteger('nomedabatalhafim')} não encontrada!`);
+            await interaction.reply(`Batalha: ${interaction.options.getString('nomedabatalhafim')} não encontrada!`);
             return;
         }
-        let dbBatalha = `batalha_${interaction.options.getString('nomedabatalhafim').toLowerCase().trim()}`;
-        console.log(dbBatalha);
-        console.log(sequelize.models[dbBatalha]);
-        // batalha.drop();
-		await interaction.reply(`Batalha ${interaction.options.getUser('nomedabatalhafim').username} encerrada!`);
+        const log = Batalha.findAll({where: {nome_batalha: interaction.options.getString('nomedabatalhafim').toLowerCase().trim()}})
+        .then(log => {
+            log.forEach(log => {
+                interaction.channel.send(`Batalha: ${log.nome_batalha} - ${log.data_batalha} - ${log.vencedor_batalha} - ${log.perdedor_batalha} - ${log.dano_batalha} - ${log.vida_batalha}`);
+            })});
+
+        Batalha.destroy({
+            where:{nome_batalha: interaction.options.getString('nomedabatalhafim').toLowerCase().trim()}
+        });
+		await interaction.reply(`Batalha ${interaction.options.getString('nomedabatalhafim')} encerrada!`);
 	},
 };
