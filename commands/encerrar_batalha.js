@@ -15,12 +15,6 @@ module.exports = {
             await interaction.reply(`Batalha: ${interaction.options.getString('nomedabatalhafim')} não encontrada!`);
             return;
         }
-        const log = Batalha.findAll({where: {nome_batalha: interaction.options.getString('nomedabatalhafim').toLowerCase().trim()}})
-        .then(log => {
-            log.forEach(log => {
-                interaction.channel.send(`Batalha: ${log.nome_batalha} - ${log.data_batalha} - ${log.vencedor_batalha} - ${log.perdedor_batalha} - ${log.dano_batalha} - ${log.vida_batalha}`);
-            })});
-
         Batalha.destroy({
             where:{nome_batalha: interaction.options.getString('nomedabatalhafim').toLowerCase().trim()}
         });

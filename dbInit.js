@@ -16,6 +16,7 @@ try{
 
 const Jogadores = require('./models/tb_jogadores')(sequelize, Sequelize.DataTypes);
 const Batalha = require('./models/tb_batalha')(sequelize, Sequelize.DataTypes);
+const Monstros = require('./models/tb_monstros')(sequelize, Sequelize.DataTypes);
 
 const force = process.argv.includes('--force') || process.argv.includes('-f');
 

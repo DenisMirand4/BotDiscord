@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {Jogadores, Batalha} = require('../dbObjects');
+const {Jogadores, Batalha, Monstros} = require('../dbObjects');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,11 +12,31 @@ module.exports = {
         .addIntegerOption(option => option
             .setName('hp')
             .setDescription('Insira o HP a ser curado')
-            .setRequired(true)),
+            .setRequired(true))
+        .addIntegerOption(option => option
+            .setName('id')
+            .setDescription('Insira o ID do monstro')),
         
         
 
 	async execute(interaction) {
+        if (interaction.options.getInteger('id') != 0) {
+            const monstro = await Monstros.findOne({where: {id: interaction.options.getInteger('id')}});
+            if (!monstro) {
+                await interaction.reply(`Monstro ${interaction.options.getInteger('id')} não existe!`);
+                return; 
+            }
+            if (monstro.hp <= 0){
+                await interaction.reply(`Monstro ${interaction.options.getInteger('id')} já está morto!`);
+                return;
+            }
+            else {
+                monstro.hp += interaction.options.getInteger('hp');
+                await monstro.save();
+                await interaction.reply(`Monstro ${monstro.nome} curado!`);
+                return;
+            }
+        }
         const jogador = await Batalha.findOne({where: {id_player: interaction.options.getUser('jogador').id}});
         if (!jogador) {
             await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} não existe!`);
@@ -29,7 +49,6 @@ module.exports = {
             jogador.hp += interaction.options.getInteger('hp');
         }
         await jogador.save();
-        // await Batalha.create({id_batalha: batalha.id_batalha, nome_batalha: batalha.nome_batalha, nome_mestre: batalha.nome_mestre, id_player: random, nome: interaction.options.getString('monstro'), hp: interaction.options.getInteger('hp'), ca: interaction.options.getInteger('ca'), iniciativa: interaction.options.getInteger('iniciativa')});
 		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} curado!`);
 	},
 };

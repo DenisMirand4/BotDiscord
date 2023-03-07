@@ -14,11 +14,6 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 
 const Jogadores = require('./models/tb_jogadores')(sequelize, Sequelize.DataTypes);
 const Batalha = require('./models/tb_batalha')(sequelize, Sequelize.DataTypes);
+const Monstros = require('./models/tb_monstros')(sequelize, Sequelize.DataTypes);
 
-// Reflect.defineProperty(Jogadores.prototype, 'addJogador', {
-//     value: async function addJogador(jogador) {
-//         return Jogadores.create({id: Jogadores.id, nome: jogador.nome, hp: jogador.hp, ca: jogador.ca});
-//     },
-// });
-
-module.exports = { Jogadores, Batalha, sequelize};
+module.exports = { Jogadores, Batalha, Monstros, sequelize};
