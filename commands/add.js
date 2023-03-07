@@ -27,9 +27,9 @@ module.exports = {
             await interaction.followUp(`Use /comeca_batalha para criar uma nova batalha!`);
             return;
         }
-        const user = await Batalha.findOne({where: {id_player: jogador.id}});
+        const user = await Batalha.findOne({where: {id_player: interaction.options.getUser('jogador').id}});
         if (user) {
-            await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} já esta na batalha ${batalha.nome_batalha} !`);
+            await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} já esta na batalha ${user.nome_batalha} !`);
             await interaction.followUp(`Use /encerra_batalha para encerrar a batalha que o jogador esta`);
             return;
         } else {
