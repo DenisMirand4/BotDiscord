@@ -20,6 +20,15 @@ module.exports = {
             where: {
                 [Op.and]:[
                     {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()},
+                    {tipo: 1}
+                ]
+            },
+            order: [['iniciativa', 'DESC']]
+        });
+        const batalhaMestre = await Batalha.findAll({
+            where: {
+                [Op.and]:[
+                    {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()},
                     {nome: {[Op.ne]: null}}
                 ]
             },
@@ -27,10 +36,11 @@ module.exports = {
         });
         let i = 0;
         aspas = "```";
-        let respaux = new Array(batalhaJogadores.length);
+        let respaux = new Array();
+        let respaux2 = new Array();
 		await interaction.reply(`Batalha ${interaction.options.getString('nomedabatalha')} iniciada!`);
         await batalhaJogadores.forEach(element => {
-		    respaux[i] = (`${i}-jogador ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`);     
+		    respaux[i] = (`${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`);     
             i++;       
         });
         i=0;
@@ -41,6 +51,18 @@ module.exports = {
         }
         resp += aspas;
         await interaction.followUp(resp);
-
+        i=0;
+        await batalhaMestre.forEach(element => {
+            respaux2[i] = (`${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`);
+            i++;
+        });
+        i=0;
+        resp = aspas;
+        while(i < batalhaMestre.length){
+            resp += respaux2[i];
+            i++;
+        }
+        resp += aspas;
+        await interaction.followUp({content: resp, ephemeral: true});
 	},
 };

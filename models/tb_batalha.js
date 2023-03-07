@@ -17,6 +17,7 @@ module.exports = (sequelize,DataTipes) => {
     hp_base: DataTipes.INTEGER,
     ca: DataTipes.INTEGER,
     iniciativa: DataTipes.INTEGER,
+    tipo: DataTipes.INTEGER,
     },
     {
         timestamps: false,

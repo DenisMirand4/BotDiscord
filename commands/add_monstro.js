@@ -20,7 +20,7 @@ module.exports = {
         
 
 	async execute(interaction) {
-        const monstro = await Monstros.findOne({where: {id: interaction.options.getUser('monstro')}});
+        const monstro = await Monstros.findOne({where: {id: interaction.options.getInteger('monstro')}});
         if (!monstro) {
             await interaction.reply(`Monstro não encontrado!`);
             return;
@@ -30,7 +30,7 @@ module.exports = {
             await interaction.reply(`Batalha ${interaction.options.getString('nomeb')} não existe!`);
             return;
         }
-        const user = await Jogadores.findOne({where: {user_id: interaction.user.id}});
+        const user = await Batalha.findOne({where: {id_player: interaction.options.getInteger('monstro')}});
         if (user) {
             await interaction.reply(`Monstro já está em uma batalha!`);
             return;
@@ -44,9 +44,10 @@ module.exports = {
                 hp: monstro.hp,
                 hp_base: monstro.hp,
                 ca: monstro.ca,
-                iniciativa: interaction.options.getInteger('iniciativa')
+                iniciativa: interaction.options.getInteger('iniciativa'),
+                tipo: 2
             });
-		    await interaction.reply(`Monstro ${interaction.options.getString('monstro')} adicionado a batalha!`);
+		    await interaction.reply(`Monstro ${monstro.nome} adicionado a batalha!`);
             return;
         }
 	},

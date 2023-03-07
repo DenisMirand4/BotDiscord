@@ -68,7 +68,7 @@ module.exports = {
             await interaction.reply(`Monstro: ID:${monstro.id} - ${interaction.options.getString('monstro')} atualizado!`);
             return;
         }
-        const monstro = await Monstros.create({
+        await Monstros.create({
             nome: interaction.options.getString('monstro'), 
             hp: interaction.options.getInteger('hp'), 
             ca: interaction.options.getInteger('ca'), 
@@ -80,6 +80,12 @@ module.exports = {
             car: interaction.options.getInteger('car'), 
             obs: interaction.options.getString('obs')
         });
-		await interaction.reply(`Monstro: ID: ${monstro.id} - ${interaction.options.getString('monstro')} criado!`);
+        const result = await Monstros.findOne({
+            order: [
+                ['id', 'DESC']
+            ]
+        });
+        interaction.reply(`Monstro: ID: ${result.id} - ${interaction.options.getString('monstro')} criado!`);
+        
 	},
 };

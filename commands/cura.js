@@ -4,7 +4,7 @@ const {Jogadores, Batalha, Monstros} = require('../dbObjects');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('cura')
-		.setDescription('Cura um jogador')
+		.setDescription('Cura um alvo')
         .addUserOption(option => option
             .setName('jogador')
             .setDescription('Jogador a ser curado')
@@ -20,10 +20,10 @@ module.exports = {
         
 
 	async execute(interaction) {
-        if (interaction.options.getInteger('id') != 0) {
+        if (interaction.options.getInteger('id') != null) {
             const monstro = await Monstros.findOne({where: {id: interaction.options.getInteger('id')}});
             if (!monstro) {
-                await interaction.reply(`Monstro ${interaction.options.getInteger('id')} não existe!`);
+                await interaction.reply(`Monstro não existe!`);
                 return; 
             }
             if (monstro.hp <= 0){

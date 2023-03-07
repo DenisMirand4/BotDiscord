@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {Op} = require('sequelize');
+const {Op, and} = require('sequelize');
 const {Jogadores, sequelize, Batalha} = require('../dbObjects');
 
 function sleep(time) {
@@ -24,23 +24,38 @@ module.exports = {
             where: {
                 [Op.and]:[
                     {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()},
-                    {nome: {[Op.ne]: null}}
+                    {tipo: 1}
                 ]
             },
             order: [['iniciativa', 'DESC']]
         });
-        
+        const batalhaMestre = await Batalha.findAll({
+            where: {
+                [Op.and]:[
+                    {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()},
+                    {nome: {[Op.ne]: null}}
+                ]
+            },
+            order: [['iniciativa', 'DESC']]
+        });        
         let i = 0;
         aspas = "```";
         let respaux = new Array();
+        let respaux2 = new Array();
         await batalhaJogadores.forEach(async element => {
             if(element.hp >= (-element.hp_base*0.5)){
-		        respaux[i] = `${i}-jogador ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;     
-                console.log(respaux[i]);
+		        respaux[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;     
                 i++;       
             }
         });
-        await sleep(2000);   
+        i=0;
+        await batalhaMestre.forEach(async element => {
+            if((element.hp >= (-element.hp_base*0.5 && element.tipo == 1)) || (element.hp >= element.hp_base && element.tipo == 2)){
+                respaux2[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;
+                i++;
+            }
+        });
+        await sleep(2000);
         i=0;
         var resp = aspas;
         resp+=`Turno encerrado! \n`;
@@ -51,5 +66,14 @@ module.exports = {
         resp += aspas;
         await interaction.reply(resp);
 
+        i=0;
+        var resp2 = aspas;
+        resp2+=`Turno encerrado! \n`;
+        while(i < respaux2.length){
+            resp2 += respaux2[i];
+            i++;
+        }
+        resp2 += aspas;
+        await interaction.followUp({content: resp2 , ephemeral: true });
 	},
 };

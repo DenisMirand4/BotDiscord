@@ -7,8 +7,8 @@ function sleep(time) {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('dano_jogador')
-		.setDescription('Causa dano a um jogador')
+		.setName('dano')
+		.setDescription('Causa dano a um alvo')
         .addUserOption(option => option
             .setName('jogador')
             .setDescription('Jogador a ser ferido')
@@ -24,7 +24,7 @@ module.exports = {
         
 
 	async execute(interaction) {
-        if(interaction.options.getInteger('id') != 0) {
+        if(interaction.options.getInteger('id') != null) {
             const monstro = await Monstros.findOne({where: {id: interaction.options.getInteger('id')}});
             if (!monstro) {
                 await interaction.reply(`Monstro não existe!`);
