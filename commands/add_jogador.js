@@ -3,7 +3,7 @@ const {Jogadores, Batalha, sequelize} = require('../dbObjects');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('add')
+		.setName('add_jogador')
 		.setDescription('Adiciona jogador a uma batalha')
         .addStringOption(option => option
             .setName('nomeb')
