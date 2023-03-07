@@ -12,7 +12,8 @@ module.exports = {
 		.setDescription('Encerra o turno atual e inicia o próximo!')
         .addStringOption(option => option
             .setName('nomedabatalha')
-            .setDescription('Insira o nome da batalha')),
+            .setDescription('Insira o nome da batalha')
+            .setRequired(true)),
 
 	async execute(interaction) {
         const batalha = await Batalha.findOne({where: {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()}});

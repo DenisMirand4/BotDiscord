@@ -7,7 +7,8 @@ module.exports = {
 		.setDescription('Encerra uma batalha!')
         .addStringOption(option => option
             .setName('nomedabatalhafim')
-            .setDescription('Insira o nome da batalha que deseja encerrar')),
+            .setDescription('Insira o nome da batalha que deseja encerrar')
+            .setRequired(true)),
 
 	async execute(interaction) {
         const batalha = await Batalha.findOne({where: {nome_batalha: interaction.options.getString('nomedabatalhafim').toLowerCase().trim()}});

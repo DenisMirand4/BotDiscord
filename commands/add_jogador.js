@@ -7,13 +7,20 @@ module.exports = {
 		.setDescription('Adiciona jogador a uma batalha')
         .addStringOption(option => option
             .setName('nomeb')
-            .setDescription('Insira o nome da batalha'))
+            .setDescription('Insira o nome da batalha')
+            .setRequired(true))
         .addUserOption(option => option
             .setName('jogador')
-            .setDescription('Jogador a ser adicionado'))
+            .setDescription('Jogador a ser adicionado')
+            .setRequired(true))
+        .addIntegerOption(option => option
+            .setName('ca')
+            .setDescription('Armadura do jogador')
+            .setRequired(true))
         .addIntegerOption(option => option
             .setName('iniciativa')
-            .setDescription('Iniciativa do jogador')),
+            .setDescription('Iniciativa do jogador')
+            .setRequired(true)),
 
 	async execute(interaction) {
         const jogador = await Jogadores.findOne({where: {id: interaction.options.getUser('jogador').id}});
@@ -41,7 +48,7 @@ module.exports = {
                 nome: jogador.nome,
                 hp: jogador.hp,
                 hp_base: jogador.hp,
-                ca: jogador.ca,
+                ca: jogador.ca + interaction.options.getInteger('ca'),
                 iniciativa: interaction.options.getInteger('iniciativa'),
                 tipo: 1
             });
