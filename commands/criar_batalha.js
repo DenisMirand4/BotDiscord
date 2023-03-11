@@ -16,13 +16,22 @@ module.exports = {
             .setRequired(true)),
 
 	async execute(interaction) {
-        const batalha = await Batalha.findOne({where: {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()}});
+        const batalha = await Batalha.findOne({
+            where: {
+                nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim(),
+            }
+        });
         if (batalha) {
             await interaction.reply(`Batalha: ${interaction.options.getString('nomedabatalha')} já existe!`);
             return;
         }
         let guid = gerador.v4();
-        let random = Math.floor(Math.random() * 100);
+        let random = Math.floor(Math.random() * 1000);
+        const igual = await Batalha.findOne({where: {id_player: random}});
+        while (random < 1000 || igual != null) {
+            random = Math.floor(Math.random() * 1000);
+            igual = await Batalha.findOne({where: {id_player: random}});
+        }
         console.log(guid);
         await Batalha.create({id_batalha: guid, nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim(), nome_mestre: interaction.options.getUser('mestre').username, id_player: random, nome: null, hp: 0, ca: 0, iniciativa: 0});
 		await interaction.reply(`Batalha ${interaction.options.getString('nomedabatalha')} criada!`);

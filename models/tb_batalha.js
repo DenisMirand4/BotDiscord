@@ -21,5 +21,6 @@ module.exports = (sequelize,DataTipes) => {
     },
     {
         timestamps: false,
+        freezeTableName: true,
     });
 };

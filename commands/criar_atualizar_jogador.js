@@ -3,7 +3,7 @@ const {Jogadores, Batalha} = require('../dbObjects');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('att_jogador')
+		.setName('criar_atualizar_jogador')
 		.setDescription('Atualiza um jogador')
         .addUserOption(option => option
             .setName('jogador')

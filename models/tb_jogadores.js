@@ -9,6 +9,7 @@ module.exports = (sequelize,DataTipes) => {
     ca: DataTipes.INTEGER
     },
     {
+        freezeTableName: true,
         timestamps: false,
     });
 };

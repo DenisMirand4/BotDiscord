@@ -21,15 +21,6 @@ module.exports = {
             await interaction.reply(`Batalha: ${interaction.options.getString('nomedabatalha')} não encontrada!`);
             return;
         }
-        const batalhaJogadores = await Batalha.findAll({
-            where: {
-                [Op.and]:[
-                    {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()},
-                    {tipo: 1}
-                ]
-            },
-            order: [['iniciativa', 'DESC']]
-        });
         const batalhaMestre = await Batalha.findAll({
             where: {
                 [Op.and]:[
@@ -40,23 +31,28 @@ module.exports = {
             order: [['iniciativa', 'DESC']]
         });        
         let i = 0;
-        aspas = "```";
+        let aspas = "```";
         let respaux = new Array();
         let respaux2 = new Array();
-        await batalhaJogadores.forEach(async element => {
-            if(element.hp >= (-element.hp_base*0.5)){
-		        respaux[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;     
-                i++;       
+        await batalhaMestre.forEach(async element => {
+            if((element.hp >= (-element.hp_base*0.5)) && element.tipo == 1){
+                respaux[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;
+                i++;
+            }
+            if((element.hp > 0) && element.tipo == 2){
+                respaux[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ?????  CA: ????? \n`;
+                i++;
             }
         });
+
         i=0;
         await batalhaMestre.forEach(async element => {
-            if((element.hp >= (-element.hp_base*0.5 && element.tipo == 1)) || (element.hp >= element.hp_base && element.tipo == 2)){
+            if((element.hp >= (-element.hp_base*0.5 && element.tipo == 1)) || (element.hp > 0 && element.tipo == 2)){
                 respaux2[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;
                 i++;
             }
         });
-        await sleep(2000);
+        await sleep(500);
         i=0;
         var resp = aspas;
         resp+=`Turno encerrado! \n`;

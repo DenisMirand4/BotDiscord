@@ -33,7 +33,7 @@ module.exports = {
             else {
                 monstro.hp += interaction.options.getInteger('hp');
                 await monstro.save();
-                await interaction.reply(`Monstro ${monstro.nome} curado!`);
+                await interaction.reply(`Monstro ${monstro.nome} curado em ${interaction.options.getInteger('hp')} HP!`);
                 return;
             }
         }
@@ -49,6 +49,6 @@ module.exports = {
             jogador.hp += interaction.options.getInteger('hp');
         }
         await jogador.save();
-		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} curado!`);
+		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} curado em ${interaction.options.getInteger('hp')} HP!`);
 	},
 };

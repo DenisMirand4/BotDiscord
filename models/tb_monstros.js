@@ -8,14 +8,15 @@ module.exports = (sequelize,DataTipes) => {
 	hp: DataTipes.INTEGER,
     ca: DataTipes.INTEGER,
     des: DataTipes.INTEGER,
-    for: DataTipes.INTEGER,
+    frc: DataTipes.INTEGER,
     con: DataTipes.INTEGER,
-    int: DataTipes.INTEGER,
+    ntl: DataTipes.INTEGER,
     sab: DataTipes.INTEGER,
     car: DataTipes.INTEGER,
     obs: DataTipes.STRING,
     },
     {
+        freezeTableName: true,
         timestamps: false,
     });
 };

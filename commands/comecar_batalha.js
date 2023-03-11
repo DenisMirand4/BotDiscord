@@ -17,15 +17,6 @@ module.exports = {
             await interaction.reply(`Batalha: ${interaction.options.getString('nomedabatalha')} não encontrada!`);
             return;
         }
-        const batalhaJogadores = await Batalha.findAll({
-            where: {
-                [Op.and]:[
-                    {nome_batalha: interaction.options.getString('nomedabatalha').toLowerCase().trim()},
-                    {tipo: 1}
-                ]
-            },
-            order: [['iniciativa', 'DESC']]
-        });
         const batalhaMestre = await Batalha.findAll({
             where: {
                 [Op.and]:[
@@ -39,19 +30,25 @@ module.exports = {
         aspas = "```";
         let respaux = new Array();
         let respaux2 = new Array();
-		await interaction.reply(`Batalha ${interaction.options.getString('nomedabatalha')} iniciada!`);
-        await batalhaJogadores.forEach(element => {
-		    respaux[i] = (`${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`);     
-            i++;       
+        await batalhaMestre.forEach(async element => {
+            if((element.hp >= (-element.hp_base*0.5)) && element.tipo == 1){
+                respaux[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;
+                i++;
+            }
+            if((element.hp > 0) && element.tipo == 2){
+                respaux[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ????? CA: ????? \n`;
+                i++;
+            }
         });
+		
         i=0;
         var resp = aspas;
-        while(i < batalhaJogadores.length){
+        while(i < batalhaMestre.length){
             resp += respaux[i];
             i++;
         }
         resp += aspas;
-        await interaction.followUp(resp);
+        await interaction.reply(resp);
         i=0;
         await batalhaMestre.forEach(element => {
             respaux2[i] = (`${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`);

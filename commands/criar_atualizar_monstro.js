@@ -3,7 +3,7 @@ const {Jogadores, Batalha, Monstros} = require('../dbObjects');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('att_monstro')
+		.setName('criar_atualizar_monstro')
 		.setDescription('Atualiza um monstro')
         .addStringOption(option => option
             .setName('monstro')
@@ -58,9 +58,9 @@ module.exports = {
                 hp: interaction.options.getInteger('hp') == null ? monstro.hp:interaction.options.getInteger('hp'), 
                 ca: interaction.options.getInteger('ca') == null ? monstro.ca:interaction.options.getInteger('ca'), 
                 des: interaction.options.getInteger('des') == null ? monstro.des:interaction.options.getInteger('des'), 
-                for: interaction.options.getInteger('for') == null ? monstro.for:interaction.options.getInteger('for'), 
+                frc: interaction.options.getInteger('for') == null ? monstro.frc:interaction.options.getInteger('for'), 
                 con: interaction.options.getInteger('con') == null ? monstro.con:interaction.options.getInteger('con'), 
-                int: interaction.options.getInteger('int') == null ? monstro.int:interaction.options.getInteger('int'), 
+                ntl: interaction.options.getInteger('int') == null ? monstro.ntl:interaction.options.getInteger('int'), 
                 sab: interaction.options.getInteger('sab') == null ? monstro.sab:interaction.options.getInteger('sab'), 
                 car: interaction.options.getInteger('car') == null ? monstro.car:interaction.options.getInteger('car'), 
                 obs: interaction.options.getString('obs') == null ? monstro.obs:interaction.options.getString('obs')
@@ -73,9 +73,9 @@ module.exports = {
             hp: interaction.options.getInteger('hp'), 
             ca: interaction.options.getInteger('ca'), 
             des: interaction.options.getInteger('des'), 
-            for: interaction.options.getInteger('for'), 
+            frc: interaction.options.getInteger('for'), 
             con: interaction.options.getInteger('con'), 
-            int: interaction.options.getInteger('int'), 
+            ntl: interaction.options.getInteger('int'), 
             sab: interaction.options.getInteger('sab'), 
             car: interaction.options.getInteger('car'), 
             obs: interaction.options.getString('obs')

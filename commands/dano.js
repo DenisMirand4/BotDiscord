@@ -25,14 +25,14 @@ module.exports = {
 
 	async execute(interaction) {
         if(interaction.options.getInteger('id') != null) {
-            const monstro = await Monstros.findOne({where: {id: interaction.options.getInteger('id')}});
+            const monstro = await Batalha.findOne({where: {id_player: interaction.options.getInteger('id')}});
             if (!monstro) {
                 await interaction.reply(`Monstro não existe!`);
                 return;
             }
             monstro.hp = monstro.hp - interaction.options.getInteger('dano');
             await monstro.save();
-            await interaction.reply(`Monstro ${monstro.nome} atingido!`);
+            await interaction.reply(`Monstro ${monstro.nome} atingido em ${interaction.options.getInteger('dano')} HP!`);
             return;
         }
 
@@ -45,6 +45,6 @@ module.exports = {
         jogador.hp = jogador.hp - interaction.options.getInteger('dano');        
         await jogador.save();
         // await Batalha.create({id_batalha: batalha.id_batalha, nome_batalha: batalha.nome_batalha, nome_mestre: batalha.nome_mestre, id_player: random, nome: interaction.options.getString('monstro'), hp: interaction.options.getInteger('hp'), ca: interaction.options.getInteger('ca'), iniciativa: interaction.options.getInteger('iniciativa')});
-		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} atingido!`);
+		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} atingido em ${interaction.options.getInteger('dano')} HP!`);
 	},
 };

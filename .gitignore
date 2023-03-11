@@ -1,3 +1,5 @@
 /.env
 /database.sqlite
 /node_modules
+/squarecloud.config
+/cacert.pem
