@@ -27,7 +27,7 @@ npm install
 5. Set up your database by running the following command:
 
 ```
-npm install discord.js sequelize sqlite3
+npm install discord.js sequelize mysql
 ```
 6. Edit the .env file and replace TOKEN with your bot token.
 
