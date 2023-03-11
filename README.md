@@ -1,7 +1,7 @@
 
 # Discord RPG Bot
 
-This is a Discord bot created for a role-playing game (RPG) community. The bot is built using Node.js and Discord.js library, and uses Sequelize ORM to interact with a SQLite database.
+This is a Discord bot created for a role-playing game (RPG) community. The bot is built using Node.js and Discord.js library, and uses Sequelize ORM to interact with a MySQL database in a cloud environment.
 
 ## Features
 
