@@ -27,7 +27,7 @@ module.exports = {
         }
         let guid = gerador.v4();
         let random = Math.floor(Math.random() * 1000);
-        const igual = await Batalha.findOne({where: {id_player: random}});
+        let igual = await Batalha.findOne({where: {id_player: random}});
         while (random < 1000 || igual != null) {
             random = Math.floor(Math.random() * 1000);
             igual = await Batalha.findOne({where: {id_player: random}});
