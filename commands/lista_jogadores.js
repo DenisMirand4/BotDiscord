@@ -9,10 +9,11 @@ module.exports = {
 
 	async execute(interaction) {
         const jogadores = await Jogadores.findAll();
-        let lista = '';
+        let aspas = "```";
+        let lista = new Array();
         for (const jogador of jogadores) {
             lista += `${jogador.nome} - HP: ${jogador.hp} - CA: ${jogador.ca}\n`;
         }
-        await interaction.reply(`Jogadores:\n${lista}`);
+        await interaction.reply(`Jogadores:\n${aspas+lista+aspas}`);
     }
 };

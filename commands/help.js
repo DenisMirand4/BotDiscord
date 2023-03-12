@@ -25,6 +25,7 @@ module.exports = {
             .addFields({name: '/cura', value: 'Aplica cura a um jogador ou monstro'})
             .addFields({name: '/lista_jogadores', value: 'Lista os jogadores da batalha'})
             .addFields({name: '/lista_monstros', value: 'Lista os monstros da batalha'})
+            .addFields({name: '/lista_batalhas', value: 'Lista as batalhas'})
             
         await interaction.reply({embeds: [embed]});
 
