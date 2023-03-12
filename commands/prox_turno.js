@@ -47,7 +47,7 @@ module.exports = {
 
         i=0;
         await batalhaMestre.forEach(async element => {
-            if((element.hp >= (-element.hp_base*0.5 && element.tipo == 1)) || (element.hp > 0 && element.tipo == 2)){
+            if((element.hp >= (-element.hp_base*0.5) && element.tipo == 1) || (element.hp > 0 && element.tipo == 2)){
                 respaux2[i] = `${i+1} - ${element.nome} iniciativa: ${element.iniciativa} HP: ${element.hp} CA: ${element.ca} \n`;
                 i++;
             }

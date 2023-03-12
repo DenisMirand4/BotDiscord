@@ -41,10 +41,12 @@ module.exports = {
             await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} não existe!`);
             return;
         }
-        sleep(1000);
-        jogador.hp = jogador.hp - interaction.options.getInteger('dano');        
-        await jogador.save();
-        // await Batalha.create({id_batalha: batalha.id_batalha, nome_batalha: batalha.nome_batalha, nome_mestre: batalha.nome_mestre, id_player: random, nome: interaction.options.getString('monstro'), hp: interaction.options.getInteger('hp'), ca: interaction.options.getInteger('ca'), iniciativa: interaction.options.getInteger('iniciativa')});
+        sleep(250);
+        await Batalha.update({hp: jogador.hp - interaction.options.getInteger('dano')},{
+            where: {
+                id_player: interaction.options.getUser('jogador').id
+            }
+        });
 		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} atingido em ${interaction.options.getInteger('dano')} HP!`);
 	},
 };

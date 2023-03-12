@@ -48,7 +48,11 @@ module.exports = {
         else {
             jogador.hp += interaction.options.getInteger('hp');
         }
-        await jogador.save();
+        await Batalha.update({hp: jogador.hp},{
+            where: {
+                id_player: interaction.options.getUser('jogador').id
+            }
+        });
 		await interaction.reply(`Jogador ${interaction.options.getUser('jogador').username} curado em ${interaction.options.getInteger('hp')} HP!`);
 	},
 };
